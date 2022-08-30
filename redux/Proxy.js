@@ -7,10 +7,6 @@ const Token = process.env.NEXT_PUBLIC_API_TOKEN;
 
 export default axios.create({
     baseURL: API_URL,
-    // headers: {
-    //     'Content-type': 'application/json',
-    //     // Authorization: `Bearer ${Token}`,
-    // },
 });
 
 export const endPoint = {

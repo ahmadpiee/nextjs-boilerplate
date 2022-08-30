@@ -1,8 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { NextShield } from 'next-shield';
-import { Loading } from './Loading';
 import { useSelector } from 'react-redux';
+import { LoadingCircle } from '@components/atoms';
 
 export function PrivateRoute({ children }) {
     const router = useRouter();
@@ -16,9 +16,9 @@ export function PrivateRoute({ children }) {
         isLoading: false,
         privateRoutes: ['/admin', '/agent', '/user', '/user/[id]'],
         publicRoutes: [''],
-        hybridRoutes: [''],
+        hybridRoutes: ['/whislist'],
         loginRoute: '/auth/login',
-        LoadingComponent: <Loading />,
+        LoadingComponent: <LoadingCircle />,
         RBAC: {
             Authenticated: {
                 grantedRoutes: ['/user', '/admin', '/agent', '/'],
