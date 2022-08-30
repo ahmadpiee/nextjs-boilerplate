@@ -1,14 +1,16 @@
 import React from 'react';
-import Cookies from 'js-cookie';
+import { Button, Grid, Typography } from '@mui/material';
+import Link from 'next/link';
 
-const Home = () => {
-    const Token = Cookies.get('token');
-    console.log('TOKEN', Token);
+const HomePage = () => {
     return (
-        <>
-            <h1>Home</h1>
-        </>
+        <Grid>
+            <Typography>Home Page</Typography>
+            <Button>
+                <Link href='/auth/login'>Login</Link>
+            </Button>
+        </Grid>
     );
 };
 
-export default Home;
+export default HomePage;

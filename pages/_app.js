@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store, wrapper } from '@redux/store';
-
+import { PrivateRoute } from '@components/PrivateRoute';
 function MyApp({ Component, pageProps }) {
     return (
         <PersistGate persistor={persistor} loading={null}>
-            <Component {...pageProps} />
+            <PrivateRoute>
+                <Component {...pageProps} />
+            </PrivateRoute>
         </PersistGate>
     );
 }

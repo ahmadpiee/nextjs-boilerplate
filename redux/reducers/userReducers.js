@@ -3,7 +3,7 @@ import * as types from '@redux/actions/userAction';
 
 const initialState = {
     isLogged: false,
-    isLoading: true,
+    isLoading: false,
     error: null,
     userInfo: {},
     itinerary: '',
@@ -15,6 +15,7 @@ export const userReducers = (state = initialState, action) => {
         case types.GET_USERINFO_REQUEST:
             return {
                 ...state,
+                isLoading: true,
             };
         case types.GET_USERINFO_SUCCESS:
             return {

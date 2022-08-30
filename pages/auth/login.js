@@ -1,31 +1,31 @@
-import { useState } from 'react';
+import React from 'react';
 import { FaUser } from 'react-icons/fa';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import styles from '@styles/AuthForm.module.css';
-import React from 'react';
 import { login } from '@redux/actions/authActions';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { userAction } from '@redux/actions/userAction';
+import Cookies from 'js-cookie';
 
 const LoginPage = () => {
-    const router = useRouter();
     const dispatch = useDispatch();
-    const [identifier, setIdentifier] = useState('');
-    const [password, setPassword] = useState('');
-    const { error, isLoading } = useSelector((state) => state.authReducers);
+    const [identifier, setIdentifier] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const Token = Cookies.get('token');
+
+    React.useEffect(() => {
+        dispatch(userAction(Token));
+    }, [dispatch, Token]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(login(identifier, password));
-        router.replace('/');
     };
 
     return (
         <>
-            {error && <p>something wrong!</p>}
-            {isLoading && <p>Loading...</p>}
             <div className={styles.auth}>
                 <h1>
                     <FaUser /> Log In

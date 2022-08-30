@@ -18,10 +18,6 @@ export const login = (identifier, password) => (dispatch) => {
     };
     Proxy.post(endPoint.login, { identifier, password }, config)
         .then(({ data }) => {
-            dispatch({
-                type: GET_AUTH_SUCCESS,
-                payload: data,
-            });
             setUser(data);
         })
         .catch((error) => {
