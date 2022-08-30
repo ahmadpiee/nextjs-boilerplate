@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@components/*": ["components/*"],
+            "@styles/*": ["styles/*"],
+            "@config/*": ["config/*"],
+            "@assets/*": ["assets/*"],
+            "@redux/*": ["redux/*"],
+            "@hooks/*": ["hooks/*"],
+            "@utils/*": ["utils/*"],
+            "@pages/*": ["pages/*"],
+            "Apollo/*": ["Apollo/*"]
+        }
+    }
+}
