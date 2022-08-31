@@ -3,11 +3,9 @@ export const GET_USERINFO_SUCCESS = 'GET_USERINFO_SUCCESS';
 export const GET_USERINFO_FAIL = 'GET_USERINFO_FAIL';
 
 import Proxy, { endPoint } from '@redux/Proxy';
+import { setUserInfo } from '@utils/helpers/userCookie';
 
-export const userAction = (Token) => (dispatch) => {
-    dispatch({
-        type: GET_USERINFO_REQUEST,
-    });
+export const userAction = (Token) => () => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
@@ -16,15 +14,9 @@ export const userAction = (Token) => (dispatch) => {
     };
     Proxy.get(endPoint.userInfo, config)
         .then(({ data }) => {
-            dispatch({
-                type: GET_USERINFO_SUCCESS,
-                payload: data,
-            });
+            setUserInfo(data);
         })
         .catch((error) => {
-            dispatch({
-                type: GET_USERINFO_FAIL,
-                payload: error.message,
-            });
+            console.log('error in userAction: ', error);
         });
 };

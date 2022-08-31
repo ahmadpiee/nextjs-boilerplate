@@ -13,15 +13,14 @@ import {
 import { persistConfig, rootReducer } from '@redux/reducers/index';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-
-const isNotProd = process.env.NODE_ENV !== 'production';
+import { isDevelopment } from '@utils/helpers/envProcess';
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
-    middleware: (defaultMiddleware) =>
-        defaultMiddleware({
+    middleware: (defaultMiddleware) => {
+        let middleware = defaultMiddleware({
             thunk,
             serializableCheck: {
                 ignoredActions: [
@@ -33,13 +32,17 @@ export const store = configureStore({
                     REGISTER,
                 ],
             },
-        }).concat(logger),
+        });
+        if (isDevelopment) {
+            middleware = middleware.concat(logger);
+        }
+        return middleware;
+    },
 });
 
 const makeStore = () => store;
-
 export const persistor = persistStore(store);
 export const wrapper = createWrapper(
     makeStore,
-    isNotProd ? { debug: false } : { debug: false }
+    isDevelopment ? { debug: true } : { debug: false }
 );

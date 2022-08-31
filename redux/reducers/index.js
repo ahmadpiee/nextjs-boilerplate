@@ -1,10 +1,9 @@
 import storage from '@redux/storage';
 import { combineReducers } from 'redux';
-import { userReducers, userPersistConfig } from './userReducers';
-import { persistReducer } from 'redux-persist';
+import { authReducers } from './authReducers';
 
 export const rootReducer = combineReducers({
-    userReducers: persistReducer(userPersistConfig, userReducers), // only error don't want to be persist
+    authReducers,
 });
 
 export const persistConfig = {

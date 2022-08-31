@@ -1,18 +1,25 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { NextShield } from 'next-shield';
-import { useSelector } from 'react-redux';
 import { LoadingCircle } from '@components/atoms';
+import Cookies from 'js-cookie';
 
-export function PrivateRoute({ children }) {
+export default function WithPrivateRoute({ children }) {
     const router = useRouter();
-    const { role, isLogged } = useSelector((state) => state.userReducers);
+    const [isAuth, setIsAuth] = React.useState(false);
+    const role = Cookies.get('role');
+    React.useEffect(() => {
+        if (role) {
+            setIsAuth(true);
+        }
+    }, [role]);
 
     console.log('ROLE:', role);
+    console.log(isAuth, 'AUTH');
 
     const shieldProps = {
         router,
-        isAuth: isLogged,
+        isAuth: isAuth,
         isLoading: false,
         privateRoutes: ['/admin', '/agent', '/user', '/user/[id]'],
         publicRoutes: [''],

@@ -2,13 +2,20 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, wrapper } from '@redux/store';
-import { PrivateRoute } from '@utils/helpers/PrivateRoute';
 import { theme, createEmotionCache } from '@components/global';
 import { CacheProvider } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { isNotDevelopment } from '@utils/helpers/envProcess';
+import WithPrivateRoute from '@utils/helpers/WithPrivateRoute';
 
 const clientSideEmotionCache = createEmotionCache();
+
+const DisableConsole = () => {
+    if (isNotDevelopment) {
+        return (console.log = function () {});
+    }
+}; // make sure all console disabled in production
 
 function MyApp({
     Component,
@@ -25,7 +32,7 @@ function MyApp({
                             content='width=device-width, initial-scale=1, shrink-to-fit=no'
                         />
                     </Head>
-                    <PrivateRoute>
+                    <WithPrivateRoute>
                         <div
                             style={{
                                 minHeight: '100vh',
@@ -33,9 +40,9 @@ function MyApp({
                             }}
                         >
                             <CssBaseline />
-                            <Component {...pageProps} />
+                            <Component {...pageProps} key={DisableConsole()} />
                         </div>
-                    </PrivateRoute>
+                    </WithPrivateRoute>
                 </ThemeProvider>
             </CacheProvider>
         </PersistGate>
